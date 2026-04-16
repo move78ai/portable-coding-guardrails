@@ -33,7 +33,8 @@ jobs:
         run: |
           set -e
 
-          MATCHES=$(git grep -nE '(^|[^0-9])1\.1\.1([^0-9]|$)|v1\.1\.1' -- . ':(exclude).github/workflows/*' || true)
+          MATCHES=$(git grep -nE '(^|[^0-9])1\.1\.1([^0-9]|$)|v1\.1\.1' -- . \
+            ':(exclude).github/workflows/*' || true)
 
           if [ -n "$MATCHES" ]; then
             echo "$MATCHES"
@@ -45,11 +46,15 @@ jobs:
         run: |
           set -e
 
-          if git grep -ni "karpathy" -- . \
+          MATCHES=$(git grep -ni "karpathy" -- . \
             ':(exclude)docs/ATTRIBUTION.md' \
             ':(exclude)skill/portable-coding-guardrails/references/attribution.md' \
-            ':(exclude)NOTICE.md'; then
-            echo "Found unexpected karpathy reference outside allowed attribution files"
+            ':(exclude)NOTICE.md' \
+            ':(exclude).github/workflows/*' || true)
+
+          if [ -n "$MATCHES" ]; then
+            echo "$MATCHES"
+            echo "Found unexpected legacy attribution reference outside allowed files"
             exit 1
           fi
 
