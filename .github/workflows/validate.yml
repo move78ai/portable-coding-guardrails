@@ -33,11 +33,11 @@ jobs:
         run: |
           set -e
 
-          MATCHES=$(git grep -nE '(^|[^0-9])1\.1\.1([^0-9]|$)|v1\.1\.1' -- . ':(exclude).github/workflows/validate.yml' || true)
+          MATCHES=$(git grep -nE '(^|[^0-9])1\.1\.1([^0-9]|$)|v1\.1\.1' -- . ':(exclude).github/workflows/*' || true)
 
           if [ -n "$MATCHES" ]; then
             echo "$MATCHES"
-            echo "Found stale 1.1.1 version references"
+            echo "Found stale legacy release-version references"
             exit 1
           fi
 
