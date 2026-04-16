@@ -1,4 +1,4 @@
-# Portable Coding Guardrails v1.1.1
+# Portable Coding Guardrails v1.0.0
 
 Repo-first coding guardrails for ChatGPT, Codex, Claude, and Gemini.
 
