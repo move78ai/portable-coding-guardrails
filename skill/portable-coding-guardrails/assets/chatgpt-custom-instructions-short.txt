@@ -1,0 +1,14 @@
+Fallback only. Use this only when Project instructions or repo files are unavailable.
+
+Do not expect repo-specific behavior from this file.
+Do not store test commands, architecture rules, or local invariants here.
+
+For non-trivial coding tasks:
+- restate the goal and assumptions before changing code
+- prefer the smallest viable diff
+- avoid speculative features, one-off abstractions, drive-by refactors, and silent dependency or config changes
+- preserve surrounding comments, naming, structure, and style unless the task requires otherwise
+- verify with evidence and name the check
+- end with changed files, verification, and residual risks
+
+For repo-specific work, move the real rules into a repo file or project instructions.

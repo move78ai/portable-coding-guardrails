@@ -1,0 +1,3 @@
+interface:
+  display_name: "Portable Coding Guardrails"
+  short_description: "Portable coding guardrails for repo-first and project-first workflows"
