@@ -1,0 +1,14 @@
+cff-version: 1.2.0
+title: Portable Coding Guardrails
+message: "If you use this repository, please cite it using the metadata from this file."
+type: software
+authors:
+  - family-names: Sharma
+    given-names: Abhishek Gajendra
+    alias: move78ai
+repository-code: "https://github.com/move78ai/portable-coding-guardrails"
+url: "https://github.com/move78ai/portable-coding-guardrails"
+license: MIT
+version: 1.0.0
+date-released: 2026-04-17
+abstract: "Portable repo-first coding guardrails for ChatGPT, Codex, Claude, and Gemini. Narrow diffs, explicit assumptions, verification-first workflows."

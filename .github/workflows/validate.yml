@@ -1,0 +1,75 @@
+name: validate
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Validate repository structure
+        run: |
+          set -e
+
+          test -f README.md
+          test -f CITATION.cff
+          test -f docs/ATTRIBUTION.md
+          test -f docs/launch/GITHUB_RELEASE_NOTES.md
+          test -f docs/media/social-preview.png
+          test -f dist/skill.zip
+          test -f skill/portable-coding-guardrails/SKILL.md
+          test -f skill/portable-coding-guardrails/agents/openai.yaml
+          test -f templates/PROJECT_APPENDIX.md
+
+      - name: Validate release version drift
+        run: |
+          set -e
+
+          if git grep -nE '(^|[^0-9])1\.1\.1([^0-9]|$)|v1\.1\.1' -- .; then
+            echo "Found stale 1.1.1 version references"
+            exit 1
+          fi
+
+      - name: Validate branding drift
+        run: |
+          set -e
+
+          if git grep -ni "karpathy" -- . \
+            ':(exclude)docs/ATTRIBUTION.md' \
+            ':(exclude)skill/portable-coding-guardrails/references/attribution.md' \
+            ':(exclude)NOTICE.md'; then
+            echo "Found unexpected karpathy reference outside allowed attribution files"
+            exit 1
+          fi
+
+      - name: Validate social preview size
+        run: |
+          set -e
+
+          SIZE=$(stat -c%s docs/media/social-preview.png)
+          if [ "$SIZE" -ge 1000000 ]; then
+            echo "docs/media/social-preview.png must be under 1 MB"
+            exit 1
+          fi
+
+      - name: Validate skill archive integrity
+        run: |
+          set -e
+          unzip -t dist/skill.zip
+
+      - name: Validate CITATION metadata
+        run: |
+          set -e
+
+          grep -q "^cff-version:" CITATION.cff
+          grep -q "^title:" CITATION.cff
+          grep -q "^repository-code:" CITATION.cff
+          grep -q "^version:" CITATION.cff
